@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,66 +17,94 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.ratemyidea.R
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.runtime.collectAsState
+import com.example.ratemyidea.addideascreen.AddIdeaScreenViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.text.style.TextAlign
+import com.example.ratemyidea.ui.theme.LocalAppTypography
 
 @Composable
 fun IdeaScreen (
     modifier: Modifier = Modifier,
-    paddingValues: androidx.compose.foundation.layout.PaddingValues = androidx.compose.foundation.layout.PaddingValues()
+    paddingValues: androidx.compose.foundation.layout.PaddingValues = androidx.compose.foundation.layout.PaddingValues(),
+    addIdeaScreenViewModel: AddIdeaScreenViewModel
 ) {
-    Column (
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(paddingValues)
-            .padding(horizontal = 24.dp),
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer (
-            modifier = Modifier
-                .height(32.dp)
-        )
+    val typography = LocalAppTypography.current
+    val currentIdea by addIdeaScreenViewModel.idea.collectAsState()
 
-        IdeaTile (
+    currentIdea?.let {
+        Column (
             modifier = Modifier
-                .weight(1f)
-        )
-
-        Spacer (
-            modifier = Modifier
-                .height(32.dp)
-        )
-
-        Row (
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .padding(paddingValues)
+                .padding(horizontal = 24.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image (
-                painter = painterResource(id = R.drawable.guteidee),
-                contentDescription = "GuteIdee",
+            Spacer (
                 modifier = Modifier
-                    .padding(bottom = 12.dp)
-                    .size(88.dp)
+                    .height(32.dp)
+            )
+
+            IdeaTile (
+                modifier = Modifier
+                    .weight(1f),
+                idea = currentIdea!!
             )
 
             Spacer (
                 modifier = Modifier
-                    .width(32.dp)
+                    .height(32.dp)
             )
 
-            Image (
-                painter = painterResource(id = R.drawable.schlechteidee),
-                contentDescription = "SchlechteIdee",
+            Row (
                 modifier = Modifier
-                    .padding(bottom = 12.dp)
-                    .size(88.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Image (
+                    painter = painterResource(id = R.drawable.guteidee),
+                    contentDescription = "GuteIdee",
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .size(88.dp)
+                )
+
+                Spacer (
+                    modifier = Modifier
+                        .width(32.dp)
+                )
+
+                Image (
+                    painter = painterResource(id = R.drawable.schlechteidee),
+                    contentDescription = "SchlechteIdee",
+                    modifier = Modifier
+                        .padding(bottom = 12.dp)
+                        .size(88.dp)
+                )
+            }
+
+            Spacer (
+                modifier = Modifier
+                    .height(32.dp)
             )
         }
-
-        Spacer (
+    } ?: run {
+        Box (
             modifier = Modifier
-                .height(32.dp)
-        )
+                .fillMaxSize()
+                .padding(paddingValues),
+            contentAlignment = Alignment.Center
+        ) {
+            Text (
+                text = "Loading...",
+                fontSize = typography.labelLarge.fontSize,
+                fontWeight = typography.labelLarge.fontWeight,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

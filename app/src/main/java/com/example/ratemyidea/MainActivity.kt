@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 
+
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -25,9 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import com.example.ratemyidea.addideascreen.AddIdeaScreen
 
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 import com.example.ratemyidea.common.NavigationBarSection
 import com.example.ratemyidea.ideasscreen.IdeaScreen
 import com.example.ratemyidea.ui.theme.LocalColorScheme
+import com.example.ratemyidea.addideascreen.AddIdeaScreenViewModel
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +49,15 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
+
+            val addIdeaScreenViewModel: AddIdeaScreenViewModel = viewModel (
+                factory = object: ViewModelProvider.Factory {
+                    override fun<T: ViewModel> create(modelClass: Class<T>): T {
+                        return AddIdeaScreenViewModel() as T
+                    }
+                }
+            )
+
             val color = LocalColorScheme.current
             var selectedIndex by remember { mutableStateOf(0) }
 
@@ -73,7 +88,8 @@ class MainActivity : ComponentActivity() {
                             IdeaScreen (
                                 modifier = Modifier
                                     .padding(paddingValues),
-                                paddingValues = paddingValues
+                                paddingValues = paddingValues,
+                                addIdeaScreenViewModel = addIdeaScreenViewModel
                             )
                         }
 
