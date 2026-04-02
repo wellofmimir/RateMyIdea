@@ -23,18 +23,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.layout.fillMaxWidth
 import com.example.ratemyidea.ui.theme.LocalColorScheme
+import com.example.ratemyidea.ui.theme.PostIdeaYellow
 
 @Composable
 fun AddIdeaTile (
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    resetTrigger: Int,
+    onTitleChange: (String) -> Unit,
+    onDescriptionChange: (String) -> Unit
 ) {
     val color = LocalColorScheme.current
     val typography = LocalAppTypography.current
 
     var titleText by remember { mutableStateOf("") }
     var descriptionText by remember { mutableStateOf("") }
+
+    LaunchedEffect(resetTrigger) {
+        titleText = ""
+        descriptionText = ""
+    }
 
     Column (
         modifier = modifier
@@ -46,7 +56,7 @@ fun AddIdeaTile (
                 shape = RoundedCornerShape(12.dp)
             )
             .background (
-                color = color.surface,
+                color = PostIdeaYellow,
                 shape = RoundedCornerShape(12.dp)
             ),
         verticalArrangement = Arrangement.Top,
@@ -84,8 +94,10 @@ fun AddIdeaTile (
                 )
             },
             onValueChange = {
-                if (it.length <= 50)
+                if (it.length <= 50) {
                     titleText = it
+                    onTitleChange(titleText)
+                }
             },
             textStyle = androidx.compose.ui.text.TextStyle (
                 textAlign = TextAlign.Start,
@@ -128,8 +140,10 @@ fun AddIdeaTile (
                 )
             },
             onValueChange = {
-                if (it.length <= 250)
+                if (it.length <= 250) {
                     descriptionText = it
+                    onDescriptionChange(descriptionText)
+                }
             },
             textStyle = androidx.compose.ui.text.TextStyle (
                 textAlign = TextAlign.Start,

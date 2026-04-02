@@ -63,8 +63,10 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.3.0") // Material Design 3
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7") // Für LifecycleOwner in Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha03")
+    implementation("com.google.android.gms:play-services-ads:23.1.0")
 }
+

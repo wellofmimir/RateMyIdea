@@ -3,6 +3,7 @@ package com.example.ratemyidea.ideasscreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.layout.Column
@@ -17,15 +18,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.ratemyidea.ui.theme.LocalColorScheme
-import com.example.ratemyidea.network.Idea
+import com.example.ratemyidea.network.model.Idea
+import com.example.ratemyidea.ui.theme.PostIdeaYellow
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 
 @Composable
 fun IdeaTile (
     modifier: Modifier = Modifier,
-    idea: Idea
+    idea: Idea?
 ) {
     val color = LocalColorScheme.current
     val typography = LocalAppTypography.current
+    val verticalScroll = rememberScrollState()
 
     Column (
         modifier = modifier
@@ -37,9 +42,10 @@ fun IdeaTile (
                 shape = RoundedCornerShape(12.dp)
             )
             .background (
-                color = color.surface,
+                color = PostIdeaYellow,
                 shape = RoundedCornerShape(12.dp)
-            ),
+            )
+            .verticalScroll(verticalScroll),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -49,7 +55,7 @@ fun IdeaTile (
         )
 
         Text (
-            text = idea.title,
+            text = idea?.title ?: "",
             fontSize = typography.labelLarge.fontSize,
             fontWeight = typography.labelLarge.fontWeight,
             textAlign = TextAlign.Center
@@ -60,37 +66,16 @@ fun IdeaTile (
                 .height(16.dp)
         )
 
-//        Row (
-//            verticalAlignment = Alignment.CenterVertically,
-//            horizontalArrangement = Arrangement.spacedBy(8.dp)
-//        ) {
-//            repeat(3) {
-//                Box (
-//                    modifier = Modifier
-//                        .background (
-//                            color = color.background,
-//                            shape = RoundedCornerShape(24.dp)
-//                        )
-//                ) {
-//                    Text (
-//                        text = "  Social  ",
-//                        fontSize = typography.labelLarge.fontSize,
-//                        fontWeight = typography.labelLarge.fontWeight
-//                    )
-//                }
-//            }
-//        }
-
         Spacer (
             modifier = Modifier
                 .height(16.dp)
         )
 
         Text (
-            text = idea.description,
+            text = idea?.description ?: "Loading...",
             fontSize = typography.bodyLarge.fontSize,
             fontWeight = typography.bodyLarge.fontWeight,
-            textAlign = TextAlign.Justify,
+            textAlign = if (idea?.uuid?.isBlank() == true) TextAlign.Center else TextAlign.Justify,
             modifier = Modifier
                 .padding(horizontal = 24.dp)
         )

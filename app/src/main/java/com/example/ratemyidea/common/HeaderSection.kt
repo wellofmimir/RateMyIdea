@@ -45,7 +45,7 @@ fun HeaderSection (
             contentDescription = "VinoriaLogo",
             modifier = Modifier
                 .padding(bottom = 12.dp)
-                .size(88.dp)
+                .size(70.dp)
         )
 
         Spacer (
