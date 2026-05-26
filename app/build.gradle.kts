@@ -6,15 +6,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.ratemyidea"
+    namespace = "com.molokosoft.ratemyidea"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.ratemyidea"
+        applicationId = "com.molokosoft.ratemyidea"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 13
+        versionName = "1.0.13"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,15 +58,19 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.0")
     implementation("androidx.activity:activity-compose:1.9.3") // Lifecycle-aware Compose Activity
     implementation("androidx.compose.ui:ui:1.7.4")            // Compose UI Core
     implementation("androidx.compose.material3:material3:1.3.0") // Material Design 3
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7") // Für LifecycleOwner in Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:3.0.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("androidx.security:security-crypto:1.1.0-alpha03")
+    implementation("androidx.navigation:navigation-compose:2.8.0")
     implementation("com.google.android.gms:play-services-ads:23.1.0")
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+    implementation("androidx.work:work-runtime-ktx:2.11.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha03")
+    implementation("com.android.billingclient:billing-ktx:6.1.0")
 }
 
